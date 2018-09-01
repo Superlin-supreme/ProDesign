@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html style="height:100%">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="https://static.jianshukeji.com/highcharts/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <meta name="description" content="地图区块中用饼图来表示具体数据的占比">
+    <title>广东各城市资源占比</title>
+    <!-- JQuery文件 -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <!-- highcharts主文件 -->
+    <script src="js/highcharts.js"></script>
+    <!-- 功能模块modules -->
+    <script src="js/exporting.js"></script>
+    <script src="js/map.js"></script>
+    <!-- 导入纬度定位功能 -->
+    <script src="js/proj4.js"></script>
+    <!-- 导入地图 -->
+    <script src="js/guangdong.js"></script>
+    <script src="js/dark-unica.js"></script>
+    <style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    </style>
+</head>
+<body style="height:100%">
+
+<div id="container" style="height:100%"></div>
+
+<script>
+// 定义饼图配置
+Highcharts.seriesType('mappie', 'pie', {
+    center: null, // Can't be array by default anymore
+    clip: true, // For map navigation
+    states: {
+        hover: {
+            halo: {
+                size: 5
+            }
+        }
+    },
+    dataLabels: {
+        enabled: false
+    }
+}, {
+    getCenter: function () {
+        var options = this.options,
+            chart = this.chart,
+            slicingRoom = 2 * (options.slicedOffset || 0);
+        if (!options.center) {
+            options.center = [null, null]; // Do the default here instead
+        }
+        // Handle lat/lon support
+        if (options.center.lat !== undefined) {
+            var point = chart.fromLatLonToPoint(options.center);
+            options.center = [
+                chart.xAxis[0].toPixels(point.x, true),
+                chart.yAxis[0].toPixels(point.y, true)
+            ];
+        }
+        // Handle dynamic size
+        if (options.sizeFormatter) {
+            options.size = options.sizeFormatter.call(this);
+        }
+        // Call parent function
+        var result = Highcharts.seriesTypes.pie.prototype.getCenter.call(this);
+        // Must correct for slicing room to get exact pixel pos
+        result[0] -= slicingRoom;
+        result[1] -= slicingRoom;
+        return result;
+    },
+    translate: function (p) {
+        this.options.center = this.userOptions.center;
+        this.center = this.getCenter();
+        return Highcharts.seriesTypes.pie.prototype.translate.call(this, p);
+    }
+});
+
+// 数据源
+var data = [
+    // city, 城市, 内河内贸集装箱航线, 内河外贸集装箱航线, 香港航线集装箱运价指数, 矿石, 钢材, 煤炭, 粮食, 沙石自卸船
+    // inRiver, outRiver, HKline, mineral, steel, coal, food, selfShip, sum
+    ["Zhuhai", "珠海", 874, 485, 0, 0, 0, 1410, 0, 0, 2769, 4, { lat: -0.1, lon: -0.2, drawConnector: false }], 
+    ["Guangzhou", "广州", 8744, 1804, 621, 396, 1404, 4668, 1425, 0, 19062, -1,{ lat: 0.2, lon: 0.2, drawConnector: false }],
+    ["Foshan", "佛山", 0, 1752, 528, 0, 0, 0, 0, 0, 2280, 0, { lat: -0.1, lon: -0.1, drawConnector: false }],
+    ["Jiangmen", "江门", 0, 1366, 528, 0, 0, 0, 0, 924, 2818, 0, { lat: -0.3, lon: -0.4, drawConnector: false }],
+    ["Zhaoqing", "肇庆", 0, 1182, 354, 0, 0, 0, 0, 0, 1536, 0, { lat: 0.5, lon: -0.2, drawConnector: false }],
+    ["Zhongshan", "中山", 0, 1524, 528, 0, 0, 0, 0, 0, 2052, 0],
+    ["Dongguan", "东莞", 0, 0, 354, 0, 0, 0, 0, 0, 354, 1, { lat: -0.1, lon: 0.2, drawConnector: false }],
+    ["Yunfu", "云浮", 0, 0, 0, 528, 0, 0, 0, 0, 528, 2, { lat: -0.1, lon: -0.2, drawConnector: false }],
+    ["Qingyuan", "清远", 0, 0, 0, 396, 0, 0, 0, 396, 792, 2, { lat: 0.6, lon: -0.1, drawConnector: false }]
+],
+    maxVotes = 0,
+    inRColor = 'rgba(220,71,71,0.80)',
+    outRColor = 'rgba(74,131,240,0.80)',
+    HKlColor = 'rgba(240,190,50,0.80)',
+    minColor = 'rgba(24,151,29,0.80)',
+    steColor = 'rgba(66,73,80,0.80)',
+    coalColor = 'rgba(7,7,8,0.80)',
+    foodColor = 'rgba(11,193,117,0.80)',
+    selfColor = 'rgba(101,64,8,0.80)',
+    idNameMap = {};
+
+Highcharts.each(data, function (row) {
+    maxVotes = Math.max(maxVotes, row[10]);
+    idNameMap[row[0]] = row[1];
+});
+
+// 自定义千分号，默认是空格（ISO 国际标准）
+Highcharts.setOptions({
+    lang: {
+        thousandsSep: ','  
+    }
+});
+
+// var mapdata = Highcharts.maps['cn/guangdong'];
+var chart = Highcharts.mapChart('container', {
+    title: {
+        text: '广东省各城市资源占比'
+    },
+    chart: {
+        animation: false //设置所有图表更新的整体动画。通过将动画设置为false，可以在整个图表中禁用动画。它可以作为函数参数覆盖每个单独的API方法。
+    },  
+    colorAxis: {
+        dataClasses: [{
+            from: -1,
+            to: 0,
+            color: 'rgba(244,91,91,0.5)',//red
+            name: '内河内贸集装箱航线'
+        }, {
+            from: 0,
+            to: 1,
+            color: 'rgba(124,181,236,0.5)',//blue
+            name: '内河外贸集装箱航线'
+        }, {
+            from: 1,
+            to: 2,
+            name: '香港航线集装箱运价指数',//yellow
+            color: 'rgba(252,242,54,0.5)'
+        }, {
+            from: 2,
+            to: 3,
+            name: '矿石',
+            color: 'rgba(90,200,90,0.5)'//green
+        }, {
+            from: 3,
+            to: 4,
+            name: '钢材',
+            color: 'rgba(93,102,110,0.5)'//grey
+        }, {
+            from: 4,
+            to: 5,
+            name: '煤炭',
+            color: 'rgba(18,17,20,0.5)'//black
+        }, {
+            from: 5,
+            to: 6,
+            name: '粮食',
+            color: 'rgba(64,231,161,0.5)' //greenblue
+        }, {
+            from: 6,
+            to: 7,
+            name: '沙石自卸船',
+            color: 'rgba(133,89,22,0.5)' //brown
+        }]
+    },
+    mapNavigation: {
+        enabled: true
+        //地图导航器，可放大缩小地图
+    },   
+    yAxis: {
+        minRange: 100
+        // Limit zoom range缩小的时候宽度不会比该属性的值还小
+    },
+    //数据提示框
+    tooltip: {
+        useHTML: true
+        //是否使用HTML代码渲染提示框的内容用以代替SVG。使用HTML允许高级格式化，如在提示框中使用表格和图像。 默认是：false.       
+    },
+    // 数据列配置，对圆饼图的默认配置
+    plotOptions: {
+        mappie: {
+            borderColor: 'rgba(255,255,255,0.4)',
+            borderWidth: 1,
+            tooltip: {
+                headerFormat: ''
+            }
+        }
+    },  
+    credits: {  
+        enabled: false     //不显示LOGO 
+    },  
+    exporting: {  
+            enabled:false  //不显示打印
+    },  
+    series: [{
+        data: data,
+        name: 'state',
+        mapData: Highcharts.maps['cn/guangdong'],
+        joinBy: 'name',// 根据 name 属性进行关联
+        // keys: ['id', 'name', 'mineral', 'demVotes', 'libVotes', 'grnVotes', 'sum', 'value', 'pieOffset'],
+        keys: ['id', 'name', 'inRiver', 'outRiver', 'HKline', 'mineral', 'steel', 'coal', 'food', 'selfShip', 'sum', 'value', 'pieOffset'],
+        tooltip: {
+            headerFormat: '',
+            pointFormatter: function () {
+                var hoverVotes = this.hoverVotes; // Used by pie only
+                return '<b>' + idNameMap[this.id] + ' 资源情况</b><br/>' +
+                    Highcharts.map([
+                    ['内河内贸集装箱航线', this.inRiver, inRColor],
+                    ['内河外贸集装箱航线', this.outRiver, outRColor],
+                    ['香港航线集装箱运价指数', this.HKline, HKlColor],
+                    ['矿石', this.mineral, minColor],
+                    ['钢材', this.steel, steColor],
+                    ['煤炭', this.coal, coalColor],
+                    ['粮食', this.food, foodColor],
+                    ['沙石自卸船', this.selfShip, selfColor]
+                ].sort(function (a, b) {
+                    return b[1] - a[1]; // Sort tooltip by most votes
+                }), function (line) {
+                    return '<span style="color:' + line[2] +
+                        // Colorized bullet
+                        '">\u25CF</span> ' +
+                        // Party and votes
+                        (line[0] === hoverVotes ? '<b>' : '') +
+                        line[0] + '： ' +
+                        Highcharts.numberFormat(line[1], 0) +
+                        (line[0] === hoverVotes ? '</b>' : '') +
+                        '<br/>';
+                }).join('') +
+                    '<hr/>总数: ' + Highcharts.numberFormat(this.sum, 0);
+            }
+        }
+    }
+    , {
+        // name: 'Separators',
+        // type: 'mapline',
+        // data: Highcharts.geojson(Highcharts.maps['countries/us/us-all'], 'mapline'),
+        // color: '#707070',
+        // showInLegend: false,
+        // enableMouseTracking: false
+    }, {
+        name: 'Connectors',
+        type: 'mapline',
+        color: 'rgba(130, 130, 130, 0.5)',
+        zIndex: 5,
+        showInLegend: false,
+        enableMouseTracking: false
+    }
+    ]
+});
+
+// When clicking legend items, also toggle connectors and pies
+// 点击某个资源的时候，把饼图也隐藏了
+Highcharts.each(chart.legend.allItems, function (item) {
+    var old = item.setVisible;
+    item.setVisible = function () {
+        var legendItem = this;
+        old.call(legendItem);
+        Highcharts.each(chart.series[0].points, function (point) {
+            if (chart.colorAxis[0].dataClasses[point.dataClass].name === legendItem.name) {
+                // Find this state's pie and set visibility
+                Highcharts.find(chart.series, function (item) {
+                    return item.name === point.id;
+                }).setVisible(legendItem.visible, false);
+                // Do the same for the connector point if it exists
+                var connector = Highcharts.find(chart.series[2].points, function (item) {
+                    return item.name === point.id;
+                });
+                if (connector) {
+                    connector.setVisible(legendItem.visible, false);
+                }
+            }
+        });
+        chart.redraw();
+    };
+});
+// Add the pies after chart load, optionally with offset and connectors
+Highcharts.each(chart.series[0].points, function (state) {
+    if (!state.id) {
+        return; // Skip points with no data, if any
+    }
+    var pieOffset = state.pieOffset || {},
+        centerLat = parseFloat(state.properties.latitude),
+        centerLon = parseFloat(state.properties.longitude);
+    // console.log(state.name);
+    // console.log(centerLat);
+    // console.log(centerLon);
+    // console.log(pieOffset.lat);
+    // console.log(pieOffset.lon);
+    // Add the pie for this state
+    chart.addSeries({
+        type: 'mappie',
+        name: state.id,
+        zIndex: 6, // Keep pies above connector lines
+        sizeFormatter: function () {
+            var yAxis = this.chart.yAxis[0],
+                zoomFactor = (yAxis.dataMax - yAxis.dataMin) /
+                (yAxis.max - yAxis.min);
+            return Math.max(
+                this.chart.chartWidth / 45 * zoomFactor, // Min size
+                this.chart.chartWidth / 11 * zoomFactor * state.sum / maxVotes
+            );
+        },
+        tooltip: {
+            // Use the state tooltip for the pies as well
+            pointFormatter: function () {
+                return state.series.tooltipOptions.pointFormatter.call({
+                    id: state.id,
+                    hoverVotes: this.name,
+                    inRiver: state.inRiver,
+                    outRiver: state.outRiver,
+                    HKline: state.HKline,
+                    mineral: state.mineral,
+                    steel: state.steel,
+                    coal: state.coal,
+                    food: state.food,
+                    selfShip: state.selfShip,
+                    sum: state.sum
+                });
+            }
+        },
+        data: [{
+            name: 'inRiver',
+            y: state.inRiver,
+            color: inRColor
+        }, {
+            name: 'outRiver',
+            y: state.outRiver,
+            color: outRColor
+        }, {
+            name: 'HKline',
+            y: state.HKline,
+            color: HKlColor
+        }, {
+            name: 'mineral',
+            y: state.mineral,
+            color: minColor
+        }, {
+            name: 'steel',
+            y: state.steel,
+            color: steColor
+        }, {
+            name: 'coal',
+            y: state.coal,
+            color: coalColor
+        }, {
+            name: 'food',
+            y: state.food,
+            color: foodColor
+        }, {
+            name: 'selfShip',
+            y: state.selfShip,
+            color: selfColor
+        }],
+        center: {
+            lat: centerLat + (pieOffset.lat || 0),
+            lon: centerLon + (pieOffset.lon || 0)
+        }
+    }, false);
+    // Draw connector to state center if the pie has been offset
+    if (pieOffset.drawConnector !== false) {
+        var centerPoint = chart.fromLatLonToPoint({
+            lat: centerLat,
+            lon: centerLon
+        }),
+            offsetPoint = chart.fromLatLonToPoint({
+                lat: centerLat + (pieOffset.lat || 0),
+                lon: centerLon + (pieOffset.lon || 0)
+            });
+        chart.series[2].addPoint({
+            name: state.id,
+            path: 'M' + offsetPoint.x + ' ' + offsetPoint.y +
+            'L' + centerPoint.x + ' ' + centerPoint.y
+        }, false);
+    }
+});
+// Only redraw once all pies and connectors have been added
+chart.redraw();
+</script>
+</body>
+</html>

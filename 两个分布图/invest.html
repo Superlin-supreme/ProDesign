@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>公司对外投资行业分布</title>
+	<script src="js/highcharts.js"></script>
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<!-- <script src="js/drilldown.js"></script> -->
+    <style type="text/css">
+    html,body{
+    	height: 100%;
+    }
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    </style>
+</head>
+<body>
+
+<div id="container" style="height:100%"></div>
+
+<script type="text/javascript">
+var dataJson = [{"Value":"E","Desc":"建筑业",y:1},{"Value":"G","Desc":"交通运输、仓储和邮政业",y:2}];
+
+var categoriesArr = new Array(dataJson.length);
+for (var i = 0; i<dataJson.length; i++) {
+  categoriesArr[i] = dataJson[i].Desc;
+}
+
+console.log(categoriesArr)
+
+$(function () {
+    // Create the chart
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: '公司对外投资行业分布'
+        },
+        // subtitle: {
+        //     text: '点击可查看具体的版本数据，数据来源: <a href="https://netmarketshare.com">netmarketshare.com</a>.'
+        // },
+        xAxis: {
+            categories: categoriesArr
+        },
+        yAxis: {
+            title: {
+                text: '投资占比'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y}'
+                }
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.Desc}</span>: <b>{point.y}</b><br/>'
+        },
+        credits: {  
+        	enabled: false     //不显示LOGO 
+   		},  
+        series: [{
+            name: '行业',
+            colorByPoint: true,
+            data: dataJson
+        }],
+    });
+});	
+</script>
+</body>
+</html>

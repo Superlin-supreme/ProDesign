@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>新闻分析</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="adminlte/bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="adminlte/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="adminlte/dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect. -->
+  <link rel="stylesheet" href="adminlte/dist/css/skins/skin-blue.min.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Font -->
+<!--   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
+  <style type="text/css">
+  /*iframe{
+	width:100%;
+	height:700px;
+  }*/
+  #overall{
+  width: 100%;
+  height: 300px;
+  }
+
+  .time-btn{
+    /*width: 50px;*/
+    /*display: block;*/
+    color: #fff;
+    background-color: #f39c12 !important;
+    /*border-radius: 15px;*/
+    /*text-align: center;*/
+    cursor: pointer;
+   /* float: left;
+    margin:10px 10px;*/
+  }
+
+  .timeline-ctt{
+    margin-top: 20px;
+    text-indent: 2rem;
+  }
+
+  .small-box{
+    display: none;
+  }
+
+  /*#news{
+    display: none;
+  }*/
+ 
+  </style>
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="index2.html" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>I</b>dx</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>Idx</b> Recommend</span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+         
+          <li class="dropdown user user-menu">
+           
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel">
+        
+      </div>
+
+      <!-- search form (Optional) -->
+      <!--<form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+          <span class="input-group-btn">
+              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+              </button>
+            </span>
+        </div>
+      </form>-->
+      <!-- /.search form -->
+
+     <!-- Sidebar Menu -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">导航</li>
+        <!-- Optionally, you can add icons to the links -->
+        <li ><a href="idx_analyze.html"><i class="fa fa-link"></i> <span>指数分析</span></a></li>
+		<li ><a href="report_analyze.html"><i class="fa fa-link"></i> <span>报价分析</span></a></li>
+		<!--新闻板块-->
+         <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>新闻分析</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+			<li><a href="news_analyze.html">新闻分析</a></li>
+            <li><a href="news_recomend.html">新闻推荐</a></li>
+          </ul>
+        </li>
+		<!--新闻板块---->
+		<!---规则板块-->
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>规则推荐板</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="report_pattern.html">报价规律</a></li>
+            <li><a href="words_pattern.html">关键词分析</a></li>
+          </ul>
+        </li>
+		<!-- 规则板块 -->
+      </ul>
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        珠江航运指数系统
+        <small>新闻分析</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+
+
+      <div class="row">
+        <div class="col-md-12">
+          <!-- <div class="nav-tabs-custom" style="cursor: move;">
+            <ul class="nav nav-tabs pull-right ui-sortable-handle">
+              <li class="pull-left header"><i class="fa fa-th"></i> 指数变化图</li>
+            </ul>
+            <iframe src="visualize/overall_lines.html" frameborder="no" scrolling="no" style="height:350px;"></iframe>
+          </div> -->
+          <div class="box box-solid bg-light-blue-gradient">
+              <div class="box-header ui-sortable-handle" style="cursor: move;">
+                <i class="fa fa-th"></i>
+
+                <h3 class="box-title">指数变化图</h3>
+
+                <div class="box-tools pull-right">
+                <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+                </button>
+                </div>
+              </div>
+              <hr>
+              <div class="box-body border-radius-none">
+                <div class="chart" id="line-chart" style="height:300px;" >
+                  <!-- <iframe src="visualize/overall_lines.html"  frameborder="no" scrolling="no" style="height:300px;" ></iframe> -->
+                  <div id="overall"></div>
+              </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-2 ">
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>煤炭</h3>
+              <p><b><span id="coalNum" class="num">36</span>条</b></p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-fire"></i>
+            </div>
+            <a href="###" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 ">
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>粮食</h3>
+              <p><b><span id="foodNum" class="num">0</span>条</b></p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-cubes"></i>
+            </div>
+            <a href="###" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 ">
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>砂石</h3>
+              <p><b><span id="gravelNum" class="num">0</span>条</b></p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-gavel"></i>
+            </div>
+            <a href="###" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 ">
+          <div class="small-box bg-purple">
+            <div class="inner">
+              <h3>钢铁</h3>
+              <p><b><span id="steelNum" class="num">0</span>条</b></p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-road"></i>
+            </div>
+            <a href="###" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 ">
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>矿石</h3>
+              <p><b><span id="oreNum" class="num">0</span>条</b></p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-cube"></i>
+            </div>
+            <a href="###" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-xs-6">
+          <div class="small-box bg-orange">
+            <div class="inner">
+              <h3>集装箱</h3>
+              <p><b><span id="containerNum" class="num">0</span>条</b></p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-ship"></i>
+            </div>
+            <a href="###" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12" id="news">
+          <ul class="timeline" id="time_line">
+            <!-- <li class="time-label">
+              <span class="time-btn" id="label_steel">
+                2015-05-29
+              </span>
+            </li>
+            <li id="label_steel_content">
+              <i class="fa fa-envelope bg-yellow"></i>
+              <div class="timeline-item">
+                <h3 class="timeline-header">2015年4月建材行业运行情况</h3>
+                <div class="timeline-body">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <div class="description-block border-right">
+                        <span class="description-percentage text-aqua"><i class="fa fa-caret-down"></i> 得分</span>
+                        <h5 class="description-header">-0.589</h5>
+                        <span class="description-text">煤炭</span>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="description-block border-right">
+                        <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 得分</span>
+                        <h5 class="description-header">0.589</h5>
+                        <span class="description-text">粮食</span>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="description-block border-right">
+                        <span class="description-percentage text-yellow"><i class="fa fa-caret-down"></i> 得分</span>
+                        <h5 class="description-header">-0.589</h5>
+                        <span class="description-text">砂石</span>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="description-block border-right">
+                        <span class="description-percentage text-purple"><i class="fa fa-caret-down"></i> 得分</span>
+                        <h5 class="description-header">-0.589</h5>
+                        <span class="description-text">钢铁</span>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="description-block border-right">
+                        <span class="description-percentage text-red"><i class="fa fa-caret-up"></i> 得分</span>
+                        <h5 class="description-header">0.589</h5>
+                        <span class="description-text">矿石</span>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="description-block border-right">
+                        <span class="description-percentage text-orange"><i class="fa fa-caret-up"></i> 得分</span>
+                        <h5 class="description-header">0.589</h5>
+                        <span class="description-text">集装箱</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="timeline-ctt">
+                  4月份，全国 <Elem>水泥</Elem> 产量同比<D>下降</D>7.3%，去年同期为<U>增长</U>3.9%；商品<Elem>混凝土</Elem>产量<D>下降</D>3.4%，去年同期为<U>增长</U>7.4%。平板玻璃 产量<D>下降</D>11.2%，去年同期为<U>增长</U>6.8%\n1-4月，全国<Elem>水泥</Elem>产量63616万吨，同比<D>下降</D>4.8%，去年同期为<U>增长</U>4.3%；商品<Elem>混凝土</Elem>产量43511万立方米，<U>增长</U>5.3%，<U>增速</U>同比<U>回落</U>2个百分点。平板玻璃产量25324万重量箱，<D>下降</D>6.4%，去年同期为<U>增长</U>4.3%与上月相比，<Elem>水泥</Elem>价格小幅<D>下跌</D>，平板玻璃价格略有<U>上涨</U>。4月份，全国P.O 42.5<Elem>散装</Elem><Elem>水泥</Elem>平均价格为283元/吨，比上月<D>下跌</D>10元/吨，同比<D>下跌</D>31元/吨，<D>跌幅</D>分别为3.4%和9.9%。重点 建材 企业平板玻璃出厂价为56.7元/重量箱，比上月<U>上涨</U>0.5元/重量箱，<U>涨幅</U>为0.9%；同比<D>下跌</D>5.5元/重量箱，<D>跌幅</D>为8.8%1-4月，建材行业实现利润1179.1亿元，同比<D>下降</D>2.2%。其中，<Elem>水泥</Elem>制造行业利润59.8亿元，<D>下降</D>65.5%；平板玻璃行业利润6.2亿元，<D>下降</D>64%文中数据如无说明，均来自国家统计局或据此计算
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="time-label">
+              <span class="time-btn" id="label_coal">
+              2015-05-29
+            </span>
+            </li>
+            <li id="label_coal_content">
+              <i class="fa fa-envelope bg-yellow"></i>
+              <div class="timeline-item">
+                <h3 class="timeline-header">安徽首次印发煤矿安全生产责任范本</h3>
+                <div class="timeline-body">
+                  安徽 省政府日前发出关于印发《煤矿、非煤矿山、化工。危化。企业安全生产责任制范本》的通知，首次以清单形式明确了相关企业的安全生产责任\n通知指出，为进一步落实企业岗位责任制和企业安全生产责任体系“五落实五到位”等规定要求，安徽省安委办采用“职责定位+职责范围+职责清单”模式，组织编制了《范本》\n其中，煤矿部分明确规定了从企业董事长到矿长，直至矿调度所长，共37个岗位的安全生产责任制\n按照《范本》，董事长是企业法定代表人，是企业安全生产第一责任人、企业安全生产委员会主任，全面负责企业安全生产工作。其安全生产职责包括建立、健全安全生产责任制，<U>保证</U>安全生产必需的资金投入等\n《范本》明确，矿长是煤矿安全生产的第一责任人、矿安全生产委员会主任，对安全生产工作全面负责。《范本》对每一个岗位的安全生产责任都进行了细化。比如，调度所长责任细化到“参与采煤工作面安装、初次放顶、收作、过地质构造带和掘进工作面贯通”
+                </div>
+              </div>
+            </li> 
+            <li> -->
+              <!-- <i class="fa fa-clock-o bg-gray"></i> -->
+          </ul>
+        </div>
+      </div>
+     </section>
+    </div>
+
+</div>
+</div>
+</div>
+      <!-- Your code here -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      Anything you want
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+      <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane active" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Recent Activity</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:;">
+              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                <p>Will be 23 on April 24th</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:;">
+              <h4 class="control-sidebar-subheading">
+                Custom Template Design
+                <span class="pull-right-container">
+                    <span class="label label-danger pull-right">70%</span>
+                  </span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+      <!-- /.tab-pane -->
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+        <form method="post">
+          <h3 class="control-sidebar-heading">General Settings</h3>
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Report panel usage
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+
+            <p>
+              Some information about this general settings option
+            </p>
+          </div>
+          <!-- /.form-group -->
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+  immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 3 -->
+<script src="adminlte/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="adminlte/dist/js/adminlte.min.js"></script>
+
+  <!-- 2 引入echarts.js-->
+  <script type="text/javascript" src="visualize/echarts.min.js"></script>
+  <!-- 引入主题js 在js文件里卖调用-->
+  <script type="text/javascript" src="visualize/theme/shine_modified.js"></script>
+  
+  <script src='visualize/dist/echarts-wordcloud.js'></script>
+
+<script type="text/javascript">
+var dataIndex;	
+$.ajax({ 
+  type: "GET",
+  url: "http://120.78.255.84:8080/huaxiang/visualize/json/idx_overall_data.json", 
+  dataType: "json", 
+  success: function(idx_data) { 
+    //echarts code start
+    // 1. 指定图表的配置项和数据
+    var option = {
+      title: {
+       text: '航运指数',
+       x:50
+     },
+     tooltip: {
+      show:false,
+      trigger: ' item', //触发tooltip类型，横坐标， 也可为item
+                  position:function(p){   //其中p为当前鼠标的位置
+                    return [p[0] + 10, p[1] - 10];
+                  }
+                },
+                legend: {
+                  data:['运价指数','集装箱指数','散货指数'],
+                  selected:{
+                    '校验运价指数':false
+                  },
+                       x: 'center', // 'center' | 'left' | {number},
+                       y: 'top',
+                     },
+                calculable : true, //是否能拖动
+                xAxis : [ //x轴
+                {
+                  type : 'category',
+                  data :idx_data.idx.period
+                }
+                ] ,grid: {  //调整表格编距与大小
+
+                  // height:600, 
+                  // width:1000,
+                  x:50,
+                  x2:50,
+                  y:50,
+                  y2:50,
+                  containLabel: true  
+                } ,
+                 yAxis : [ //y轴
+                 { 
+                  type : 'value',
+                  max:1200,
+                  min:800,
+                  splitNumber : 10,
+                      axisLabel : {//间隔名称格式器
+                        formatter: '{value}'
+                      }
+                    }
+                    ],
+                    series: [{
+                      name:'运价指数',
+                      type:'line',
+                      data:idx_data.idx.total
+                    },
+                  // {
+                  //  name:'集装箱指数',
+                  //  type:'line',
+                  //  data:idx_data.idx.container
+                  // },{
+                  //  name:'散货指数',
+                  //  type:'line',
+                  //  data:idx_data.idx.bulkload
+                  // }
+                  ],
+                dataZoom: { //图表下方横条，数据区域缩放。与toolbox.feature.dataZoom同步，仅对直角坐标系图表有效。
+                  show: true,
+                  start : 90,
+                  end : 100,
+                  // top:360,
+                  // left:80,
+                  dataBackgroundColor:'#eee'
+                }
+              };
+              
+              // 2. 基于准备好的dom，初始化echarts实例
+              var myChart = echarts.init(document.getElementById('overall'),'shine');
+              // 3.使用刚指定的配置项和数据显示图表。
+              myChart.setOption(option);
+              myChart.on('click', function (params) {
+
+                dataIndex = parseInt(params.name);
+                // var seriesName=params.seriesName;
+                // console.log(dataIndex, seriesName);
+                $('#time_line').css('display', 'none')
+                $.ajax({
+                  type: "POST",
+                  url: "http://120.78.255.84/count_type.php",
+                  // url: "visualize/count_type.php",
+                  data: {
+                    dx: dataIndex
+                  },
+                  contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                  dataType: "json",
+                  success: function(data) {
+                    if (data.success) {
+                      // var t = 'type'; 
+                      // alert(data.typeNum);
+                      // alert(eval('data.' + t));
+                      // console.log(data);  
+                      dataIn(data);                     
+                    } else {
+                      alert("出现错误：" + data.msg);
+                    }  
+                  },
+                  error: function(jqXHR){     
+                    alert("发生错误：" + jqXHR.status);  
+                    console.log("返回信息：" + jqXHR.responseText);  
+                  },  
+                });
+              });
+              
+            //echarts code end
+        }});//ajax end	
+
+var cData;
+
+function dataIn(data){
+  cData = data;
+  console.log(data);
+  $('.num').html(0);
+  var typeNum = data.typeNum;
+  var type = data.type;
+  for (var i=0; i<typeNum; i++){
+    var t = data.type[i]+'Num';
+    $('#'+ t).html(eval('data.' + t));
+  }
+  $('.small-box').slideDown('slow');
+}	
+
+
+
+$('.small-box-footer').click(function(){
+  var alltype = ['煤炭', '粮食', '砂石', '钢铁', '矿石', '集装箱'];
+  var alltypecolor = ['aqua', 'green', 'yellow', 'purple', 'red', 'orange'];
+  var applyhtml = '';
+  var ix = 0;
+  var itemNum =  $(this).parents('.small-box').find('.num').attr('id');
+  var item = itemNum.replace(/Num/i, "");
+  var iNum = eval('cData.'+ itemNum);  
+  var itemArr = eval('cData.'+ item);
+  console.log(item);
+  console.log(iNum);
+  console.log(itemArr);
+  for (var i = 0; i < itemArr.length; i++) {
+    if (itemArr[i] != 'keys') {
+      // console.log(itemArr[i]);
+      // var time = itemArr[i].substr(0,10);//时间
+      // // console.log(itemArr[i].substr(0,10));
+      // var x = itemArr[i].indexOf('_data.json')
+      // var hdl = itemArr[i].replace(/_data.json/i, "").substr(11);//标题
+      // // console.log(itemArr[i].replace(/_data.json/i, "").substr(11));
+
+      ((function(i){
+        var time = itemArr[i].substr(0,10);//时间
+        // console.log(itemArr[i].substr(0,10));
+        var x = itemArr[i].indexOf('_data.json')
+        var hdl = itemArr[i].replace(/_data.json/i, "").substr(11);//标题
+        $.ajax({
+          type: "GET",
+          url: "http://120.78.255.84:8080/huaxiang/charts/data/news2/"+dataIndex+"/"+item+"/"+ encodeURI(itemArr[i]),
+        // async: false,
+        dataType: "json",
+        success: function(data) {
+          // console.log(data.article);
+
+          var ctt = data.article;
+          var scoreArr =  data.vector.score;
+          // console.log(data.vector.score);
+          var addscore = '';
+          for(var t=0; t<6; t++){
+            var arrow;
+            if (scoreArr[t] >= 0) {
+              arrow = 'class="fa fa-caret-up"';
+            }else{
+              arrow = 'class="fa fa-caret-down"';
+            }
+            addscore = addscore + '<div class="col-md-2"><div class="description-block border-right"><span class="description-percentage text-'+ alltypecolor[t] +'"><i '+ arrow + '></i> 得分</span><h5 class="description-header">'+ scoreArr[t] +'</h5><span class="description-text">'+ alltype[t] + '</span></div></div>';
+          }
+
+          applyhtml = applyhtml + 
+          '<li class="time-label"><span class="time-btn" id="label_steel">'+ time + '</span></li><li class="label_content"><i class="fa fa-envelope bg-yellow"></i><div class="timeline-item"><h3 class="timeline-header">'+ hdl + '</h3><div class="timeline-body"><div class="row">'+ addscore +'</div><div class="timeline-ctt">'+ ctt + '</div></div></div></li>'; //+ ctt + '</div></div></li>';
+          
+          // $('#time_line').html(applyhtml+'<i class="fa fa-clock-o bg-gray"></i>');
+          ix++;                    
+          // console.log(ix);
+          if(ix == iNum){
+            // console.log("加载完");
+            // console.log(applyhtml);
+            $('#time_line').html(applyhtml+'<li><i class="fa fa-clock-o bg-gray"></i></li>');
+            $('#time_line').css('display', 'block')
+          }
+        },
+        error: function(jqXHR) {
+          ix++;          
+          console.log(ix);
+          console.log("发生错误：" + jqXHR.status); 
+        }
+      });
+      }(i)));
+
+     
+    }
+
+  }
+
+
+})
+
+// <li id="label_steel_content">
+//               <i class="fa fa-envelope bg-yellow"></i>              
+//               <div class="timeline-item">
+//                 <h3 class="timeline-header">2015年4月建材行业运行情况</h3>
+
+// var alltype = ['煤炭', '粮食', '砂石', '钢铁', '矿石', '集装箱'];
+// var scoreArr =  data.vector.score;
+// for(var t=0; t<6; t++){
+//   var arrow;
+//   if (scoreArr[t] >= 0) {
+//     arrow = 'class="fa fa-caret-up"';
+//   }else{
+//     arrow = 'class="fa fa-caret-down"';
+//   }
+//   applyhtml = applyhtml + '<div class="col-md-2"><div class="description-block border-right"><span class="description-percentage text-aqua"><i '+ arrow + '></i> 得分</span><h5 class="description-header">'+ scoreArr[t] +'</h5><span class="description-text">'+ alltype[t] + '</span></div></div>';
+// }
+//                 <div class="timeline-body">
+//                   <div class="row">
+                    // <div class="col-md-2">
+                    //   <div class="description-block border-right">
+                    //     <span class="description-percentage text-aqua"><i class="fa fa-caret-down"></i> 得分</span>
+                    //     <h5 class="description-header">-0.589</h5>
+                    //     <span class="description-text">煤炭</span>
+                    //   </div>
+                    // </div>
+//                     <div class="col-md-2">
+//                       <div class="description-block border-right">
+//                         <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 得分</span>
+//                         <h5 class="description-header">0.589</h5>
+//                         <span class="description-text">粮食</span>
+//                       </div>
+//                     </div>
+//                     <div class="col-md-2">
+//                       <div class="description-block border-right">
+//                         <span class="description-percentage text-yellow"><i class="fa fa-caret-down"></i> 得分</span>
+//                         <h5 class="description-header">-0.589</h5>
+//                         <span class="description-text">砂石</span>
+//                       </div>
+//                     </div>
+//                     <div class="col-md-2">
+//                       <div class="description-block border-right">
+//                         <span class="description-percentage text-purple"><i class="fa fa-caret-down"></i> 得分</span>
+//                         <h5 class="description-header">-0.589</h5>
+//                         <span class="description-text">钢铁</span>
+//                       </div>
+//                     </div>
+//                     <div class="col-md-2">
+//                       <div class="description-block border-right">
+//                         <span class="description-percentage text-red"><i class="fa fa-caret-up"></i> 得分</span>
+//                         <h5 class="description-header">0.589</h5>
+//                         <span class="description-text">矿石</span>
+//                       </div>
+//                     </div>
+                  //   <div class="col-md-2">
+                  //     <div class="description-block border-right">
+                  //       <span class="description-percentage text-orange"><i class="fa fa-caret-up"></i> 得分</span>
+                  //       <h5 class="description-header">0.589</h5>
+                  //       <span class="description-text">集装箱</span>
+                  //     </div>
+                  //   </div>
+                  // </div>
+//                   <div class="timeline-ctt">
+//                   4月份，全国 <Elem>水泥</Elem> 产量同比<D>下降</D>7.3%，去年同期为<U>增长</U>3.9%；商品<Elem>混凝土</Elem>产量<D>下降</D>3.4%，去年同期为<U>增长</U>7.4%。平板玻璃 产量<D>下降</D>11.2%，去年同期为<U>增长</U>6.8%\n1-4月，全国<Elem>水泥</Elem>产量63616万吨，同比<D>下降</D>4.8%，去年同期为<U>增长</U>4.3%；商品<Elem>混凝土</Elem>产量43511万立方米，<U>增长</U>5.3%，<U>增速</U>同比<U>回落</U>2个百分点。平板玻璃产量25324万重量箱，<D>下降</D>6.4%，去年同期为<U>增长</U>4.3%与上月相比，<Elem>水泥</Elem>价格小幅<D>下跌</D>，平板玻璃价格略有<U>上涨</U>。4月份，全国P.O 42.5<Elem>散装</Elem><Elem>水泥</Elem>平均价格为283元/吨，比上月<D>下跌</D>10元/吨，同比<D>下跌</D>31元/吨，<D>跌幅</D>分别为3.4%和9.9%。重点 建材 企业平板玻璃出厂价为56.7元/重量箱，比上月<U>上涨</U>0.5元/重量箱，<U>涨幅</U>为0.9%；同比<D>下跌</D>5.5元/重量箱，<D>跌幅</D>为8.8%1-4月，建材行业实现利润1179.1亿元，同比<D>下降</D>2.2%。其中，<Elem>水泥</Elem>制造行业利润59.8亿元，<D>下降</D>65.5%；平板玻璃行业利润6.2亿元，<D>下降</D>64%文中数据如无说明，均来自国家统计局或据此计算
+//                   </div>
+//                 </div>
+
+
+//               </div>
+//             </li>
+
+// var oBox = document.getElementById("time_line");
+// oBox.onclick = function (ev) {
+//   var ev = ev || window.event;
+//   var target = ev.target || ev.srcElement;
+//   if(target.className == 'time-btn'){
+//     var targetId = target.getAttribute('id');
+//     var targetContent = $('#' + targetId + '_content');
+//     if (targetContent.css('display') == 'none') {
+//       targetContent.slideDown('slow');
+//       // targetContent.css('display','block');
+//     }else{
+//       targetContent.slideUp('slow');
+//     }
+//   }
+// }
+
+$('#time_line').on('click','.time-btn', function(ev){
+    var target = $(ev.target);
+    var targetContent = target.parents('.time-label').next();
+    if (targetContent.css('display') == 'none') {
+      targetContent.slideDown('slow');
+      // targetContent.css('display','block');
+    }else{
+      targetContent.slideUp('slow');
+    }
+})
+
+
+</script>
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+</body>
+</html>

@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>bulkload</title>
+  <style type="text/css">
+/*body{
+	background-color:#transparent;
+}
+div{
+	background-color:#transparent;
+}*/
+.pie{
+	width:100%;
+	height:270px;
+}
+</style>
+</head>
+<body style="height:900px">
+	<div id="for_pie">
+	</div>
+	<!-- 1 为ECharts准备一个具备大小（宽高）的Dom -->
+	<!--TODO: chrome 不支持ajax请求本地文件，待解决-->
+	<div id="bulkload" style="height:250px"></div>
+
+	
+	<!-- 2 引入jquery（要在echarts.js前面 -->
+	<script type="text/javascript" src="jquery.js"></script>
+	<!-- 2 引入echarts.js-->
+	<script type="text/javascript" src="echarts.min.js"></script>
+	<!-- 引入主题js 在js文件里卖调用-->
+	<script type="text/javascript" src="theme/shine_modified.js"></script>
+	<!-- 3 编写自己的js代码,写完存取去js文件里面 -->
+	<script type="text/javascript" >
+		var theme='shine';
+	</script>
+	<script type="text/javascript" src="js/load_pie.js"></script>
+	<script type="text/javascript" src="js/bulkload.js"></script>
+
+</body>
+</html>
